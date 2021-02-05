@@ -11,10 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: curl ip.sb
+    - name: test ip without proxy
+      run: curl ip.sb
     - uses: ./
       with:
         outbound-json: ${{ secrets.OUTBOUND_JSON }}
-    - run: |
+    - name: test ip with proxy
+      run: |
         export HTTP_PROXY=127.0.0.1:1080
         curl ip.sb
+    - name: print v2ray logs
+      run: |
+        cat ${{ runner.temp }}/v2ray-access.log
+        cat ${{ runner.temp }}/v2ray-error.log
