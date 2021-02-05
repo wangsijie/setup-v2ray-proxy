@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import { config } from 'process';
 import * as installer from './installer';
 
 export async function run() {
@@ -17,7 +18,7 @@ export async function run() {
       );
     }
 
-    await installer.setV2ray(version, configJson);
+    await installer.setV2ray(version, JSON.parse(configJson));
   } catch (error) {
     core.setFailed(error.message);
   }

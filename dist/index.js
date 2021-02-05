@@ -1480,7 +1480,7 @@ function run() {
             if (!configJson) {
                 core.setFailed('Missing v2ray outbound json!');
             }
-            yield installer.setV2ray(version, configJson);
+            yield installer.setV2ray(version, JSON.parse(configJson));
         }
         catch (error) {
             core.setFailed(error.message);
