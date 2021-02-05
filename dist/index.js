@@ -5007,8 +5007,8 @@ function setV2ray(versionSpec, configJson) {
         yield tc.extractZip(downloadPath, path.join(baseDir, 'v2ray'));
         const config = Object.assign({}, defaultConfig);
         config.outbounds.unshift(configJson);
-        config.log.access = path.join(baseDir, 'v2ray-access.log');
-        config.log.error = path.join(baseDir, 'v2ray-error.log');
+        config.log.access = path.join(baseDir, '../v2ray-access.log');
+        config.log.error = path.join(baseDir, '../v2ray-error.log');
         fs.writeFileSync(path.join(baseDir, 'v2ray/config.json'), JSON.stringify(config, null, 4));
         core.info('Spawn');
         child_process_1.spawn(path.join(baseDir, 'v2ray/v2ray'), { stdio: 'ignore', detached: true }).unref();
