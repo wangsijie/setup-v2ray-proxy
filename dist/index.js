@@ -5000,12 +5000,12 @@ function setV2ray(versionSpec, configJson) {
         core.info(`Attempting to download v2ray ${versionSpec}...`);
         const downloadPath = yield tc.downloadTool(`https://github.com/v2fly/v2ray-core/releases/download/v${versionSpec}/v2ray-linux-64.zip`);
         core.info('Extracting ...');
-        yield tc.extractZip(downloadPath, '/usr/local/lib/v2ray');
+        yield tc.extractZip(downloadPath, '/etc/v2ray');
         const config = Object.assign({}, defaultConfig);
         config.outbounds.push(configJson);
-        fs.writeFileSync('/usr/local/lib/v2ray/config.json', JSON.stringify(config, null, 4));
+        fs.writeFileSync('/etc/v2ray/config.json', JSON.stringify(config, null, 4));
         core.info('Spawn');
-        child_process_1.spawn('/usr/local/lib/v2ray/v2ray', { stdio: 'ignore', detached: true }).unref();
+        child_process_1.spawn('/etc/v2ray/v2ray', { stdio: 'ignore', detached: true }).unref();
         core.info('Done');
     });
 }
