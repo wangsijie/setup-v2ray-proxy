@@ -4938,6 +4938,7 @@ exports.setV2ray = void 0;
 const core = __importStar(__webpack_require__(470));
 const tc = __importStar(__webpack_require__(533));
 const fs = __importStar(__webpack_require__(747));
+const path = __importStar(__webpack_require__(622));
 const child_process_1 = __webpack_require__(129);
 const defaultConfig = {
     "log": {
@@ -5000,12 +5001,13 @@ function setV2ray(versionSpec, configJson) {
         core.info(`Attempting to download v2ray ${versionSpec}...`);
         const downloadPath = yield tc.downloadTool(`https://github.com/v2fly/v2ray-core/releases/download/v${versionSpec}/v2ray-linux-64.zip`);
         core.info('Extracting ...');
-        yield tc.extractZip(downloadPath, '/etc/v2ray');
+        const baseDir = process.env.RUNNER_TEMP;
+        yield tc.extractZip(downloadPath, path.join(baseDir, 'v2ray'));
         const config = Object.assign({}, defaultConfig);
         config.outbounds.push(configJson);
-        fs.writeFileSync('/etc/v2ray/config.json', JSON.stringify(config, null, 4));
+        fs.writeFileSync(path.join(baseDir, 'v2ray/config.json'), JSON.stringify(config, null, 4));
         core.info('Spawn');
-        child_process_1.spawn('/etc/v2ray/v2ray', { stdio: 'ignore', detached: true }).unref();
+        child_process_1.spawn(path.join(baseDir, 'v2ray/v2ray'), { stdio: 'ignore', detached: true }).unref();
         core.info('Done');
     });
 }

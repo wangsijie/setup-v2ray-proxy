@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as tc from '@actions/tool-cache';
 import * as fs from 'fs';
+import * as path from 'path';
 import {spawn} from 'child_process';
 
 const defaultConfig = {
@@ -67,11 +68,12 @@ export async function setV2ray(
   core.info(`Attempting to download v2ray ${versionSpec}...`);
   const downloadPath = await tc.downloadTool(`https://github.com/v2fly/v2ray-core/releases/download/v${versionSpec}/v2ray-linux-64.zip`);
   core.info('Extracting ...');
-  await tc.extractZip(downloadPath, '/etc/v2ray');
+  const baseDir = process.env.RUNNER_TEMP!;
+  await tc.extractZip(downloadPath, path.join(baseDir, 'v2ray'));
   const config = { ...defaultConfig };
   config.outbounds.push(configJson);
-  fs.writeFileSync('/etc/v2ray/config.json', JSON.stringify(config, null, 4));
+  fs.writeFileSync(path.join(baseDir, 'v2ray/config.json'), JSON.stringify(config, null, 4));
   core.info('Spawn');
-  spawn('/etc/v2ray/v2ray', { stdio: 'ignore', detached: true }).unref();
+  spawn(path.join(baseDir, 'v2ray/v2ray'), { stdio: 'ignore', detached: true }).unref();
   core.info('Done');
 }
