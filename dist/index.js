@@ -5011,6 +5011,9 @@ function setV2ray(versionSpec, configJson) {
         fs.writeFileSync(path.join(baseDir, 'v2ray/config.json'), JSON.stringify(config, null, 4));
         // core.info('Spawn');
         // spawn(path.join(baseDir, 'v2ray/v2ray'), { stdio: 'ignore', detached: true }).unref();
+        core.info('Copy scripts');
+        fs.copyFileSync('./start.sh', path.join(baseDir, 'start-v2ray.sh'));
+        fs.copyFileSync('./stop.sh', path.join(baseDir, 'stop-v2ray.sh'));
         core.info('Done');
     });
 }
