@@ -67,11 +67,11 @@ export async function setV2ray(
   core.info(`Attempting to download v2ray ${versionSpec}...`);
   const downloadPath = await tc.downloadTool(`https://github.com/v2fly/v2ray-core/releases/download/v${versionSpec}/v2ray-linux-64.zip`);
   core.info('Extracting ...');
-  await tc.extractZip(downloadPath, '/usr/local/lib/v2ray');
+  await tc.extractZip(downloadPath, '/etc/v2ray');
   const config = { ...defaultConfig };
   config.outbounds.push(configJson);
-  fs.writeFileSync('/usr/local/lib/v2ray/config.json', JSON.stringify(config, null, 4));
+  fs.writeFileSync('/etc/v2ray/config.json', JSON.stringify(config, null, 4));
   core.info('Spawn');
-  spawn('/usr/local/lib/v2ray/v2ray', { stdio: 'ignore', detached: true }).unref();
+  spawn('/etc/v2ray/v2ray', { stdio: 'ignore', detached: true }).unref();
   core.info('Done');
 }
