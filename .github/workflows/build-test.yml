@@ -15,4 +15,6 @@ jobs:
     - uses: ./
       with:
         outbound-json: ${{ secrets.OUTBOUND_JSON }}
-    - run: HTTP_PROXY=127.0.0.1:1080 curl ip.sb
+    - run: |
+        export HTTP_PROXY=127.0.0.1:1080
+        curl ip.sb

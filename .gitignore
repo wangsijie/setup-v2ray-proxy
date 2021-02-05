@@ -95,3 +95,4 @@ typings/
 .dynamodb/
 
 test.js
+test
