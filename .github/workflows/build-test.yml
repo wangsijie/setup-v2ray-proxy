@@ -18,10 +18,7 @@ jobs:
         outbound-json: ${{ secrets.OUTBOUND_JSON }}
     - name: test ip with proxy
       run: |
-        ${{ runner.temp }}/v2ray/v2ray &
-        export HTTP_PROXY=127.0.0.1:1080
-        curl ip.sb
-        killall v2ray
+        ${{ runner.temp }}/v2ray/v2ray
     - name: print v2ray config
       run: |
         cat ${{ runner.temp }}/v2ray/config.json
