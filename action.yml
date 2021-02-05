@@ -1,0 +1,10 @@
+name: 'Setup v2ray proxy'
+description: 'Setup a v2ray proxy for action environment'
+author: 'Wang Sijie'
+inputs:
+  config-json:
+    required: true
+    description: 'v2ray client config'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
