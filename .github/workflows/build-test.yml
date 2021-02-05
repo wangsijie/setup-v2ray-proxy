@@ -18,6 +18,8 @@ jobs:
         outbound-json: ${{ secrets.OUTBOUND_JSON }}
     - name: test ip with proxy
       run: |
+        echo $RUNNER_TEMP
+        export RUNNER_TEMP=${{ runner.temp }}
         bash ${{ runner.temp }}/start-v2ray.sh
         export http_proxy=127.0.0.1:1080
         bash ${{ runner.temp }}/stop-v2ray.sh
